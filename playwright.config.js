@@ -7,10 +7,11 @@ import { defineConfig, devices } from '@playwright/test';
 const config = ({
   testDir: './tests', //what test case to run
   timeout: 40 * 1000, //timeout for loading
-  expect: { timeout: 40_000}, //timeout for assertion
+  expect: { timeout: 5000}, //timeout for assertion
   reporter: 'html',
   use: {
-    browserName: 'chromium'
+    browserName: 'chromium',
+    headless: false //run with browser display or not
   },
 });
 
