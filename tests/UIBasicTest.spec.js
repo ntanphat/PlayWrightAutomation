@@ -29,4 +29,6 @@ test("Page Playwright test", async ({ page }) => {
     //get title - assertion
     console.log(await page.title());
     await expect(page).toHaveTitle("Google");
+
+    
 });
