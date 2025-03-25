@@ -6,6 +6,7 @@ test.only("Context Playwright test", async ({ browser }) => {
     const page = await context.newPage();
     const userName = page.locator('#username');
     const signIn = page.locator("#signInBtn");
+    const cardTitle = page.locator(".card-body a");
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     console.log(await page.title());
     //css, xpath
@@ -20,8 +21,10 @@ test.only("Context Playwright test", async ({ browser }) => {
     await userName.fill("rahulshettyacademy");
     await page.locator("[type='password']").fill("learning");
     await signIn.click();
-    console.log(await page.locator(".card-body a").first().textContent());
-    console.log(await page.locator(".card-body a").nth(1).textContent());
+    // console.log(await cardTitle.first().textContent());
+    // console.log(await cardTitle.nth(1).textContent());
+    const allTitles = await cardTitle.allTextContents();
+    console.log(allTitles);
 });
 
 test("Page Playwright test", async ({ page }) => {
