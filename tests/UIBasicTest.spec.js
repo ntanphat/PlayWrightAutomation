@@ -54,7 +54,7 @@ test("Child Windows Handle", async({browser})=>{
     const documentLink = page.locator("[href*='documents-request']");
 
     /*
-    write by yourself
+    write by myself
     await documentLink.click(); //open new page
     const newPage = await context.waitForEvent("page");//listen for new page pending, rejected, fulfilled
     */
@@ -81,4 +81,16 @@ test('test case from codegen', async ({ page }) => {
   await page.getByRole('link', { name: 'Courses' }).click();
   await page.locator('.logo > a').click();
   await page.getByRole('link', { name: 'View All Products' }).click();
+});
+
+test.only('test', async ({ page }) => {
+  await page.goto('https://www.ultra88.com/');
+  await page.getByRole('textbox', { name: 'Username' }).click();
+  await page.getByRole('textbox', { name: 'Username' }).fill('super01sub12');
+  await page.getByRole('button', { name: 'Login' }).click();
+  await page.getByRole('textbox', { name: 'Password' }).click();
+  await page.getByRole('textbox', { name: 'Password' }).fill('1234aaAA');
+  await page.getByRole('button', { name: 'Login' }).click();
+  await expect(page.locator('#profile-content').getByText('SUPERTESTTE01')).toBeVisible();
+  await page.getByTitle('Log out').click();
 });
