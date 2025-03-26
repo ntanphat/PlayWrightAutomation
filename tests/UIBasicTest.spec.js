@@ -1,7 +1,7 @@
 const { test, expect, selectors } = require('@playwright/test');
 
 //test("First Playwright test", async function(){
-test.only("Context Playwright test", async ({ browser }) => {
+test("Context Playwright test", async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();
     const userName = page.locator('#username');
@@ -27,11 +27,58 @@ test.only("Context Playwright test", async ({ browser }) => {
     console.log(allTitles);
 });
 
-test("Page Playwright test", async ({ page }) => {
-    await page.goto("https://google.com");
-    //get title - assertion
-    console.log(await page.title());
-    await expect(page).toHaveTitle("Google");
+test("UI Controls", async ({ page }) => {
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    const userName = page.locator('#username');
+    const signIn = page.locator("#signInBtn");
+    const dropdown = page.locator("select.form-control");
+    const documentLink = page.locator("[href*='documents-request']");
+    await dropdown.selectOption("consult");
+    await page.locator(".radiotextsty").last().click();
+    await page.locator("#okayBtn").click();
+    console.log(await page.locator(".radiotextsty").last().isChecked());
+    await expect (page.locator(".radiotextsty").last()).toBeChecked();
+    await page.locator("#terms").click();
+    await expect(page.locator("#terms")).toBeChecked();
+    await page.locator("#terms").uncheck();
+    expect(await page.locator("#terms").isChecked()).toBeFalsy(); //should be await expect
+    await expect(documentLink).toHaveAttribute("class","blinkingText");
+    //assertion
+    //await page.pause();
+});
 
-    
+test("Child Windows Handle", async({browser})=>{
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    const documentLink = page.locator("[href*='documents-request']");
+
+    /*
+    write by yourself
+    await documentLink.click(); //open new page
+    const newPage = await context.waitForEvent("page");//listen for new page pending, rejected, fulfilled
+    */
+
+    const [newPage] = await Promise.all([ //iterate until all event be fulfilled successfully
+        context.waitForEvent("page"),
+        documentLink.click(),
+    ])
+    const text = await newPage.locator(".red").textContent();
+    const arrayText = text.split("@")
+    const domain = arrayText[1].split(" ")[0]
+    console.log(domain)
+    await page.locator('#username').fill(domain); //go back to the first page
+    //await page.pause();
+    console.log("2:" + await page.locator('#username').textContent());
+})
+
+test('test case from codegen', async ({ page }) => {
+  await page.goto('https://www.google.com/');
+  await page.getByRole('combobox', { name: 'Tìm kiếm' }).click();
+  await page.getByRole('combobox', { name: 'Tìm kiếm' }).fill('rhulshetty');
+  await page.getByRole('combobox', { name: 'Tìm kiếm' }).press('ArrowDown');
+  await page.getByRole('link', { name: 'Rahul Shetty Academy:' }).click();
+  await page.getByRole('link', { name: 'Courses' }).click();
+  await page.locator('.logo > a').click();
+  await page.getByRole('link', { name: 'View All Products' }).click();
 });
