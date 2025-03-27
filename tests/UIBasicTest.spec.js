@@ -72,18 +72,7 @@ test("Child Windows Handle", async({browser})=>{
     console.log("2:" + await page.locator('#username').textContent());
 })
 
-test('test case from codegen', async ({ page }) => {
-  await page.goto('https://www.google.com/');
-  await page.getByRole('combobox', { name: 'Tìm kiếm' }).click();
-  await page.getByRole('combobox', { name: 'Tìm kiếm' }).fill('rhulshetty');
-  await page.getByRole('combobox', { name: 'Tìm kiếm' }).press('ArrowDown');
-  await page.getByRole('link', { name: 'Rahul Shetty Academy:' }).click();
-  await page.getByRole('link', { name: 'Courses' }).click();
-  await page.locator('.logo > a').click();
-  await page.getByRole('link', { name: 'View All Products' }).click();
-});
-
-test.only('test', async ({ page }) => {
+test('test', async ({ page }) => {
   await page.goto('https://www.ultra88.com/');
   await page.getByRole('textbox', { name: 'Username' }).click();
   await page.getByRole('textbox', { name: 'Username' }).fill('super01sub12');
