@@ -20,4 +20,22 @@ test("Context Playwright test", async ({ page }) => {
             break;
         }
     }
+    await page.locator("[routerlink*='cart']").click();
+    await page.locator("div li").first().waitFor(); // wait for item in cart is shown
+    const bool = await page.locator("h3:has-text('ADIDAS ORIGINAL')").isVisible();
+    expect(bool).toBeTruthy();
+    await page.locator("text=Checkout").click();
+    await page.locator("[placeholder*='Country']").pressSequentially("vi",{delay: 100});
+    const dropdown = page.locator(".ta-results");
+    await dropdown.waitFor();
+    const optionsCount = await dropdown.locator("button").count();
+    for(let i=0; i<optionsCount;i++){
+        const text = await dropdown.locator("button").nth(i).textContent();
+        if(text.trim() === "Vietnam"){
+            //click option
+            await dropdown.locator("button").nth(i).click();
+            break;
+        }
+    }
+    await page.pause();
 });
