@@ -14,8 +14,8 @@ test("Context Playwright test", async ({ page }) => {
     const cardTitles = await page.locator(".card-body b").allTextContents();
     console.log(cardTitles);
     const count = await products.count();
-    for (let i=0; i<count; i++){
-        if(await products.nth(i).locator("b").textContent() === productName){
+    for (let i = 0; i < count; i++) {
+        if (await products.nth(i).locator("b").textContent() === productName) {
             //add to cart
             await products.nth(i).locator("text=Add To Cart").click() ///wtf locator ???
             break;
@@ -26,13 +26,13 @@ test("Context Playwright test", async ({ page }) => {
     const bool = await page.locator("h3:has-text('ADIDAS ORIGINAL')").isVisible();
     expect(bool).toBeTruthy();
     await page.locator("text=Checkout").click();
-    await page.locator("[placeholder*='Country']").pressSequentially("vi",{delay: 100});
+    await page.locator("[placeholder*='Country']").pressSequentially("vi", { delay: 100 });
     const dropdown = page.locator(".ta-results");
     await dropdown.waitFor();
     const optionsCount = await dropdown.locator("button").count();
-    for(let i=0; i<optionsCount;i++){
+    for (let i = 0; i < optionsCount; i++) {
         const text = await dropdown.locator("button").nth(i).textContent();
-        if(text.trim() === "Vietnam"){
+        if (text.trim() === "Vietnam") {
             //click option
             await dropdown.locator("button").nth(i).click();
             break;
@@ -46,10 +46,10 @@ test("Context Playwright test", async ({ page }) => {
     await page.locator("button[routerlink*='myorders']").click();
     await page.locator("tbody").waitFor();
     const rows = page.locator("tbody tr");
-    for(let i=0; i<await rows.count(); ++i){
+    for (let i = 0; i < await rows.count(); ++i) {
         console.log(i);
         const rowOrderId = await rows.nth(i).locator("th").textContent();
-        if(orderId.includes(rowOrderId)){
+        if (orderId.includes(rowOrderId)) {
             await rows.nth(i).locator("button").first().click();
             break;
         }
