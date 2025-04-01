@@ -1,6 +1,17 @@
-const { test, expect, selectors } = require('@playwright/test');
+const { test, expect, request} = require('@playwright/test');
+const { log } = require('console');
+const loginPayload = {userEmail: "ntphat134@gmail.com", userPassword: "1234aaAA"};
 
-//test("Web Client App login", async function(){
+test.beforeAll(async() => {
+    const apiContext = await request.newContext();
+    const loginResponse = await apiContext.post('https://rahulshettyacademy.com/api/ecom/auth/login', {
+        data: loginPayload
+    }) //200, 201
+    expect(loginResponse.ok()).toBeTruthy();
+    const loginResponseJson = loginResponse.json();
+    const token = loginResponseJson.token;
+});
+
 test("Client App login", async ({ page }) => {
     const productName = "ADIDAS ORIGINAL";
     const email = "ntphat134@gmail.com";
