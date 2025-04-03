@@ -7,7 +7,7 @@ import { trace } from 'console';
  */
 const config = ({
   testDir: './tests', //what test case to run
-  timeout: 40 * 1000, //timeout for loading
+  timeout: 30 * 1000, //timeout for loading
   expect: { timeout: 5000}, //timeout for assertion
   reporter: 'html',
   use: {
