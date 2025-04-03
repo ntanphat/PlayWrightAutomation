@@ -2,21 +2,25 @@
 //test browser -> get from .json, cart order, order detail, order history
 
 const { test, expect} = require('@playwright/test');
+const productName = "ADIDAS ORIGINAL";
+const email = "ntphat134@gmail.com";
+let webContext;
 
 test.beforeAll(async({browser})=>{
     const context = await browser.newContext();
-    const page = context.newPage();
+    const page = await context.newPage();
     await page.goto("https://rahulshettyacademy.com/client");
     await page.getByPlaceholder("email@example.com").fill(email);
     await page.getByPlaceholder("enter your passsword").fill("1234aaAA");
     await page.getByRole('button',{name: "Login"}).click();
     await page.waitForLoadState("networkidle");
+    await context.storageState({path: "state.json"});
+    webContext = await browser.newContext({storageState: "state.json"});
 })
 
-test("Context Playwright test", async ({ page }) => {
-    const productName = "ADIDAS ORIGINAL";
-    const email = "ntphat134@gmail.com";
-    const products = page.locator(".card-body");
+test("Context Playwright test", async () => {
+    const page = await webContext.newPage();
+    await page.goto("https://rahulshettyacademy.com/client");
 
     await page.locator(".card-body b").first().waitFor();
     
