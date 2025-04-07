@@ -27,6 +27,38 @@ test("Context Playwright test", async ({ browser }) => {
     console.log(allTitles);
 });
 
+test.only("Browser Context Validation Error Login", async ({ browser }) => {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    //page.route("**/*.css",route => route.abort());
+    //page.route("**/*.{jpg,png,jpeg}",route => route.abort());
+    const userName = page.locator('#username');
+    const signIn = page.locator("#signInBtn");
+    const cardTitle = page.locator(".card-body a");
+    //page.on('request',request => console.log(request.url()));
+    page.on('response',response => console.log(response.url(), response.status()));
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    console.log(await page.title());
+    //css, xpath
+    await userName.fill("rahulshettyacademy1111");
+    await page.locator("[type='password']").fill("learning");
+    await signIn.click();
+    //wait until this locator shown up page
+    console.log(await page.locator("[style*='block']").textContent());
+    await expect(page.locator("[style*='block']")).toContainText("Incorrect");
+    //type - fill: clear existing content
+    await userName.fill("");
+    await userName.fill("rahulshettyacademy");
+    await page.locator("[type='password']").fill("learning");
+    await signIn.click();
+    await cardTitle.first().waitFor();
+    //console.log(await cardTitle.first().textContent());
+    //console.log(await cardTitle.nth(1).textContent());
+    const allTitles = await cardTitle.allTextContents();
+    //await page.pause();
+    console.log(allTitles);
+});
+
 test("UI Controls", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     const userName = page.locator('#username');
