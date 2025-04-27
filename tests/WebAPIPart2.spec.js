@@ -18,7 +18,7 @@ test.beforeAll(async({browser})=>{
     webContext = await browser.newContext({storageState: "state.json"}); //new browser
 })
 
-test("Context Playwright test", async () => {
+test("@API Context Playwright test", async () => {
     const page = await webContext.newPage();
     await page.goto("https://rahulshettyacademy.com/client");
 

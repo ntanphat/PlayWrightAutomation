@@ -7,7 +7,7 @@ const dataset = JSON.parse(JSON.stringify(require("../utils/placeorderTestData.j
 
 //test("Web Client App login", async function(){
 for (const data of dataset) {
-    test(`Client App login for ${data.productName}`, async ({ page }) => {
+    test(`@Web Client App login for product ${data.productName}`, async ({ page }) => {
         const poManager = new POManager(page);
         const products = page.locator(".card-body");
         const loginPage = poManager.getLoginPage();
@@ -34,7 +34,7 @@ for (const data of dataset) {
         expect(orderId.includes(await orderHistoryPage.getOrderId())).toBeTruthy();
     });
 }
-customTest.only(`Client App login`, async ({ page, testDataForOrder }) => {
+customTest(`Client App login`, async ({ page, testDataForOrder }) => {
     const poManager = new POManager(page);
     const products = page.locator(".card-body");
     const loginPage = poManager.getLoginPage();
