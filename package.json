@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test tests/WebAPIPart1.spec.js --headed"
+    "regression" : "npx playwright test",
+    "webTests" : "npx playwright test --grep @Web",
+    "ApiTests" : "npx playwright test --grep @API",
+    "SafariNewConfig" : "npx playwright test --config playwright.config1.js --project=safari"
   },
   "keywords": [],
   "author": "",
@@ -11,7 +14,8 @@
   "description": "",
   "devDependencies": {
     "@playwright/test": "^1.51.1",
-    "@types/node": "^22.13.10"
+    "@types/node": "^22.13.10",
+    "allure-playwright": "^3.2.1"
   },
   "dependencies": {
     "exceljs": "^4.4.0"

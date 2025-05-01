@@ -13,7 +13,7 @@ const config = ({
   reporter: 'html',
   use: {
     browserName: 'chromium',
-    headless: false, //run with browser display or not
+    headless: true, //run with browser display or not
     screenshot: 'on',
     trace: 'on'
     //trace: 'retain-on-failure' //trace failed test only

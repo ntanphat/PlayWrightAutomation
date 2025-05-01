@@ -19,8 +19,8 @@ const config = ({
       name: 'safari',
       use: {
         browserName: 'webkit',
-        headless: false, //run with browser display or not
-        screenshot: 'on',
+        headless: true, //run with browser display or not
+        screenshot: 'off',
         trace: 'on',
         //trace: 'retain-on-failure' //trace failed test only
         ...devices['iPhone 11']
